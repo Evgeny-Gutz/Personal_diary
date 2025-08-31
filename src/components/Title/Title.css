@@ -1,0 +1,16 @@
+.title1 {
+    font-weight: 600;
+    font-size: var(--fontSize-title);
+    line-height: var(--lineHeight-title);
+    letter-spacing: -2%;
+    color: var(--color-title);
+}
+
+.title3 {
+    font-weight: 600;
+    font-size: calc(var(--fontSize-title) / 2);
+    line-height: calc(var(--lineHeight-title) / 2);
+    letter-spacing: -2%;
+    vertical-align: middle;
+    color: var(--color-title)
+}
