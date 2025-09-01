@@ -1,7 +1,13 @@
 #root {
-  font-family: sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
   --color-title: #EBEEF5;
+  --bg-color-input: #0000001A;
   --fontSize-title: 64px;
   --lineHeight-title: 80px;
 }
 
+.app {
+  max-width: 1440px;
+}
