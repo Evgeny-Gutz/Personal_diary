@@ -1,8 +1,8 @@
-import './Button.css';
+import stryles from './Button.module.css';
 
 const Button = ({children, onClick}) => {
 	return (
-		<button className='button' onClick={onClick}>{children}</button>
+		<button className={stryles.button} onClick={onClick}>{children}</button>
 	);
 };
 

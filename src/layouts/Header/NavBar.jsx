@@ -1,8 +1,8 @@
-import './NavBar.css';
+import styles from './NavBar.module.css';
 
 const NavBar = () => {
 	return (
-		<div className='nav-bar'>
+		<div className={styles['nav-bar']}>
 			<img src="/bookmark.svg" alt="Logo" />
 			<ul> 
 				<li><a href="#">Поиск фильмов</a></li>

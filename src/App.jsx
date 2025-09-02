@@ -1,4 +1,4 @@
-import './App.css';
+import styles from './App.module.css';
 import Title from './components/Title/Title';
 import Button from './components/Button/Button';
 import Paragraph from './components/Paragraph/Paragraph';
@@ -63,7 +63,7 @@ function App() {
 	};
 
 	return (
-		<div className='app'>
+		<div className={styles.app}>
 			<NavBar/>
 			<InputText placeholder={'Введите название'} icon={'search-normal.svg'} onClick={sayHello} buttonText={'Искать'}/>
 			<InputText placeholder={'Введите название'} onClick={sayHello} buttonText={'Войти в профиль'}/>
