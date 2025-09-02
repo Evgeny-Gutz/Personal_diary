@@ -1,8 +1,8 @@
 import styles from './Paragraph.module.css';
 
-const Paragraph = ({children}) => {
+const Paragraph = ({children, ...rest}) => {
 	return (
-		<p className={styles.paragraph}>{children}</p>
+		<p className={styles.paragraph} {...rest}>{children}</p>
 	);
 };
 

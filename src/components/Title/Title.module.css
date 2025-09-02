@@ -1,16 +1,15 @@
-.title1 {
+.title {
     font-weight: 600;
-    font-size: var(--fontSize-title);
-    line-height: var(--lineHeight-title);
-    letter-spacing: -2%;
-    color: var(--color-title);
+    letter-spacing: -0.01em;
+    color: #EBEEF5;
 }
 
-.title3 {
-    font-weight: 600;
-    font-size: calc(var(--fontSize-title) / 2);
-    line-height: calc(var(--lineHeight-title) / 2);
-    letter-spacing: -2%;
-    vertical-align: middle;
-    color: var(--color-title)
+.h1 {
+    font-size: 64px;
+    line-height: 80px;    
+}
+
+.h3 {
+    font-size: 32px;
+    line-height: 40px;
 }

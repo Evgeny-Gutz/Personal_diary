@@ -6,6 +6,8 @@ import NavBar from './layouts/Header/NavBar';
 import InputText from './components/InputSearch/InputText';
 import CardFilm from './components/CardFilm/CardFilm';
 
+import { useRef, useState } from 'react';
+
 const FILMS_LIST = [
 	{
 		id: 1,
@@ -58,22 +60,55 @@ const FILMS_LIST = [
 ];
 
 function App() {
-	const sayHello = () => {
-		alert('Првиет!');
+	const inputText = useRef();
+	const [dataUser, setDataUser] = useState({
+		name: undefined,
+		isLogined: false
+	});
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+		const userName = inputText.current.value.trim();
+		const checkUser = localStorage.getItem(inputText.current.value);
+		if(!checkUser) {
+			alert('Введите имя пользователя');
+			return;
+		}
+		if(checkUser !== null) {
+			const userData = JSON.parse(checkUser);
+			userData.isLogined = true;
+			inputText.current.value = '';
+			setDataUser(userData);
+			return;
+		}
+
+		alert(`Был создан новый пользователь с именем ${userName}`);
+		const myDataUser = {
+			name: userName,
+			isLogined: true
+		};
+		localStorage.setItem(userName, JSON.stringify(myDataUser));
 	};
 
 	return (
 		<div className={styles.app}>
-			<NavBar/>
-			<InputText placeholder={'Введите название'} icon={'search-normal.svg'} onClick={sayHello} buttonText={'Искать'}/>
-			<InputText placeholder={'Введите название'} onClick={sayHello} buttonText={'Войти в профиль'}/>
+			<NavBar name={dataUser.isLogined && dataUser.name} setDataUser={setDataUser}/>
+			<InputText placeholder={'Введите название'} icon={'search-normal.svg'}/>
+			<InputText placeholder={'Введите название'}/>
+
+			<form className={styles.form} onSubmit={handleLogin}>
+				<Title type='h1'>Вход</Title>
+				<InputText ref={inputText} placeholder={'Введите название'} icon={'search-normal.svg'}/>
+				<Button>Войти в профиль</Button>
+			</form>
+
+
 			<Title type='h3'>Войти в профиль</Title>
-			<Button onClick={sayHello}>Я кнопка</Button>
+			<Button>Я кнопка</Button>
 			<Paragraph>Lorem ipsum dolor sit amet consectetur adipisicing \n
         elit. Nesciunt consectetur inventore soluta asperiores pariatur, odit quas repellat quia corporis? Aut officia dolores commodi quisquam, blanditiis provident esse enim nobis recusandae!</Paragraph>
-			<div>
+			<div className={styles['film-list']}>
 				{FILMS_LIST.map(({id, rating, description, poster}) => <CardFilm key={id} rating={rating} description={description} poster={poster}/>)}
-				
 			</div>
 		</div>
 	);
