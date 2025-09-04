@@ -7,7 +7,7 @@ import InputText from './components/InputSearch/InputText';
 import CardFilm from './components/CardFilm/CardFilm';
 import { GlobalContext } from './context/global.context';
 
-import { useRef, useContext, useEffect} from 'react';
+import { useRef, useContext, useEffect, type FormEvent} from 'react';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
 
 const FILMS_LIST = [
@@ -61,15 +61,19 @@ const FILMS_LIST = [
 	}
 ];
 
+interface User {
+	name:string; 
+	isLogined: boolean;
+}
 // [{"name": "Вася", "isLogined": true}]
 
 function App() {
-	const inputText = useRef();
+	const inputText = useRef<HTMLInputElement>(null);
 	const {dataUser, setContextDataUser} = useContext(GlobalContext);
 	const [users, setUsers] = useLocalStorage('Users');
 
 	useEffect(() => { // проверяем есть ли в localStorage залогиненный пользователь
-		if(!users || users.length === 0) return;
+		if(!Array.isArray(users) || users.length === 0) return;
 
 		const hasUserLogin = users.find(user => user.isLogined);
 		if(hasUserLogin) {
@@ -77,7 +81,9 @@ function App() {
 		}
 	}, [setContextDataUser, users]);
 
-	const handleLogin = (e) => {
+	const handleLogin = (e:FormEvent) => {
+		if(!Array.isArray(users) || users.length === 0) return;
+		if(!inputText.current) return;
 		e.preventDefault();
 		const inputValue = inputText.current.value.trim();
 
@@ -105,12 +111,13 @@ function App() {
 	};
 
 	const handleOut = () => {
+		if(!Array.isArray(users) || users.length === 0) return;
 		const updateUsers = users.map(user => {
 			return user.name === dataUser.name ? {...user, isLogined: false} : user;
 		});
 
 		setUsers(updateUsers);
-		setContextDataUser(prev => ({...prev, isLogined: false}));
+		setContextDataUser((prev:User) => ({...prev, isLogined: false}));
 	};
 
 	const handleIn = () => {
@@ -119,23 +126,23 @@ function App() {
 
 	return (
 		<div className={styles.app}>
-			<NavBar name={dataUser.isLogined && dataUser.name} handleOut={handleOut} handleIn={handleIn}/>
+			<NavBar name={dataUser.isLogined ? dataUser.name : ''} handleOut={handleOut} handleIn={handleIn}/>
 			<InputText placeholder={'Введите название'} icon={'search-normal.svg'}/>
 			<InputText placeholder={'Введите название'}/>
 
 			<form className={styles.form} onSubmit={handleLogin}>
-				<Title type='h1'>Вход</Title>
+				<Title>Вход</Title>
 				<InputText ref={inputText} placeholder={'Введите название'} icon={'search-normal.svg'}/>
 				<Button>Войти в профиль</Button>
 			</form>
 
 
-			<Title type='h3'>Войти в профиль</Title>
-			<Button>Я кнопка</Button>
+			<Title level={3}>Войти в профиль</Title>
+			<Button>Искать</Button>
 			<Paragraph>Lorem ipsum dolor sit amet consectetur adipisicing \n
         elit. Nesciunt consectetur inventore soluta asperiores pariatur, odit quas repellat quia corporis? Aut officia dolores commodi quisquam, blanditiis provident esse enim nobis recusandae!</Paragraph>
 			<div className={styles['film-list']}>
-				{FILMS_LIST.map(({id, rating, description, poster}) => <CardFilm key={id} rating={rating} description={description} poster={poster}/>)}
+				{FILMS_LIST.map(({id, rating, description, poster}) => <CardFilm key={id} rating={rating} filmName={description} poster={poster}/>)}
 			</div>
 		</div>
 	);

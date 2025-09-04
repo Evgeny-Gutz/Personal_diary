@@ -1,6 +1,7 @@
 import styles from './NavBar.module.css';
+import type { NavBarProps } from './NavBar.props';
 
-const NavBar = ({name, handleOut, handleIn}) => {
+const NavBar = ({name, handleOut, handleIn}: NavBarProps) => {
 	const userIcon = <img src="/user.svg" alt="Login" />;
 	const iconIn = <img src="/login.svg" alt="Login" />;
 

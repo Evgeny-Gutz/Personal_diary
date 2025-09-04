@@ -1,20 +1,24 @@
-.input-text {
-    background-color: #0000001A;
+.input-wrapper {
+    background-color: var(--bg-input);
     width: 384px;
     display: flex;
     align-items: center;
     gap: 16px;
     padding: 12px 16px;
     border-radius: 12px;
-    border: 1px solid #323B54;
+    border: 1px solid var(--border-color);
     box-sizing: border-box;
+}
 
-    > input {
-        width: 100%;
-        padding: 12px 0;
-        border: none;
-        background-color: transparent;
-        outline: none;
-        color: #ffffff;
-    }
+.input-wrapper:focus-within {
+    border-color: var(--border-color-focus);
+}
+
+.input {
+    width: 100%;
+    padding: 12px 0;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: var(--white-color);
 }
