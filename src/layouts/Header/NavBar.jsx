@@ -1,16 +1,8 @@
 import styles from './NavBar.module.css';
 
-const NavBar = ({name = undefined, setDataUser}) => {
+const NavBar = ({name, handleOut, handleIn}) => {
 	const userIcon = <img src="/user.svg" alt="Login" />;
 	const iconIn = <img src="/login.svg" alt="Login" />;
-
-	const handleOut = () => {
-		setDataUser(prev => ({...prev, isLogined: false}));
-	};
-
-	const handleIn = () => {
-		alert('Вход');
-	};
 
 	return (
 		<div className={styles['nav-bar']}>

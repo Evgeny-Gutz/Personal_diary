@@ -5,8 +5,10 @@ import Paragraph from './components/Paragraph/Paragraph';
 import NavBar from './layouts/Header/NavBar';
 import InputText from './components/InputSearch/InputText';
 import CardFilm from './components/CardFilm/CardFilm';
+import { GlobalContext } from './context/global.context';
 
-import { useRef, useState } from 'react';
+import { useRef, useContext, useEffect} from 'react';
+import { useLocalStorage } from './hooks/use-localstorage.hook';
 
 const FILMS_LIST = [
 	{
@@ -59,40 +61,65 @@ const FILMS_LIST = [
 	}
 ];
 
+// [{"name": "Вася", "isLogined": true}]
+
 function App() {
 	const inputText = useRef();
-	const [dataUser, setDataUser] = useState({
-		name: undefined,
-		isLogined: false
-	});
+	const {dataUser, setContextDataUser} = useContext(GlobalContext);
+	const [users, setUsers] = useLocalStorage('Users');
+
+	useEffect(() => { // проверяем есть ли в localStorage залогиненный пользователь
+		if(!users || users.length === 0) return;
+
+		const hasUserLogin = users.find(user => user.isLogined);
+		if(hasUserLogin) {
+			setContextDataUser(hasUserLogin);
+		}
+	}, [setContextDataUser, users]);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-		const userName = inputText.current.value.trim();
-		const checkUser = localStorage.getItem(inputText.current.value);
-		if(!checkUser) {
-			alert('Введите имя пользователя');
-			return;
-		}
-		if(checkUser !== null) {
-			const userData = JSON.parse(checkUser);
-			userData.isLogined = true;
-			inputText.current.value = '';
-			setDataUser(userData);
-			return;
-		}
+		const inputValue = inputText.current.value.trim();
 
-		alert(`Был создан новый пользователь с именем ${userName}`);
-		const myDataUser = {
-			name: userName,
-			isLogined: true
-		};
-		localStorage.setItem(userName, JSON.stringify(myDataUser));
+		if (inputValue === '') {
+			alert('Поле не должно быть пустым');
+			return;
+		}
+		
+		const curentUser = users.find(el => el.name === inputValue);
+		if(!curentUser) {
+			alert('Такого пользователя нет!');
+			return;
+		}
+		
+		const updateUsers = users.map(user => {
+			return user.name === inputValue ? {...user, isLogined: true} : user;
+		});
+
+		setUsers(updateUsers);
+		setContextDataUser({...curentUser, isLogined: true});
+		
+		inputText.current.value = '';
+		alert(`Пользователь ${inputValue} успешно авторизован!!!`);
+		return;
+	};
+
+	const handleOut = () => {
+		const updateUsers = users.map(user => {
+			return user.name === dataUser.name ? {...user, isLogined: false} : user;
+		});
+
+		setUsers(updateUsers);
+		setContextDataUser(prev => ({...prev, isLogined: false}));
+	};
+
+	const handleIn = () => {
+		alert('Вход');
 	};
 
 	return (
 		<div className={styles.app}>
-			<NavBar name={dataUser.isLogined && dataUser.name} setDataUser={setDataUser}/>
+			<NavBar name={dataUser.isLogined && dataUser.name} handleOut={handleOut} handleIn={handleIn}/>
 			<InputText placeholder={'Введите название'} icon={'search-normal.svg'}/>
 			<InputText placeholder={'Введите название'}/>
 
