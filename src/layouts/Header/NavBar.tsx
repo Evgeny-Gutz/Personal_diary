@@ -1,3 +1,4 @@
+import { Link, NavLink } from 'react-router';
 import styles from './NavBar.module.css';
 import type { NavBarProps } from './NavBar.props';
 
@@ -7,13 +8,13 @@ const NavBar = ({name, handleOut, handleIn}: NavBarProps) => {
 
 	return (
 		<div className={styles['nav-bar']}>
-			<img src="/bookmark.svg" alt="Logo" />
+			<Link to={'/'}><img src="/bookmark.svg" alt="Logo" /></Link>
 			<ul> 
-				<li><a href="#">Поиск фильмов</a></li>
-				<li><a href="#">Мои фильмы<span>2</span></a></li>
-				{name && <li><a href="#">{name}{userIcon}</a></li>}
-				{name && <li><a href="#" onClick={handleOut}>Выйти</a></li>}
-				{!name && <li><a href="#" onClick={handleIn}>Войти{iconIn}</a></li>}
+				<li><NavLink to="/">Поиск фильмов</NavLink></li>
+				<li><NavLink to="/favorites">Мои фильмы<span>2</span></NavLink></li>
+				{name && <li>{name}{userIcon}</li>}
+				{name && <li><NavLink to={'/'} onClick={handleOut}>Выйти</NavLink></li>}
+				{!name && <li><NavLink to={'/login'} onClick={handleIn}>Войти{iconIn}</NavLink></li>}
 			</ul>
 		</div>
 	);

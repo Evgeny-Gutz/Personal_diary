@@ -9,6 +9,9 @@ import { GlobalContext } from './context/global.context';
 
 import { useRef, useContext, useEffect, type FormEvent} from 'react';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+
+
 
 const FILMS_LIST = [
 	{
@@ -127,20 +130,6 @@ function App() {
 	return (
 		<div className={styles.app}>
 			<NavBar name={dataUser.isLogined ? dataUser.name : ''} handleOut={handleOut} handleIn={handleIn}/>
-			<InputText placeholder={'Введите название'} icon={'search-normal.svg'}/>
-			<InputText placeholder={'Введите название'}/>
-
-			<form className={styles.form} onSubmit={handleLogin}>
-				<Title>Вход</Title>
-				<InputText ref={inputText} placeholder={'Введите название'} icon={'search-normal.svg'}/>
-				<Button>Войти в профиль</Button>
-			</form>
-
-
-			<Title level={3}>Войти в профиль</Title>
-			<Button>Искать</Button>
-			<Paragraph>Lorem ipsum dolor sit amet consectetur adipisicing \n
-        elit. Nesciunt consectetur inventore soluta asperiores pariatur, odit quas repellat quia corporis? Aut officia dolores commodi quisquam, blanditiis provident esse enim nobis recusandae!</Paragraph>
 			<div className={styles['film-list']}>
 				{FILMS_LIST.map(({id, rating, description, poster}) => <CardFilm key={id} rating={rating} filmName={description} poster={poster}/>)}
 			</div>

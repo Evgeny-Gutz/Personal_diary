@@ -1,6 +1,7 @@
 .input-wrapper {
     background-color: var(--bg-input);
     width: 384px;
+    min-width: 225px;
     display: flex;
     align-items: center;
     gap: 16px;

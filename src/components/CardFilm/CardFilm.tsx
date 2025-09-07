@@ -1,13 +1,14 @@
-import Paragraph from '../Paragraph/Paragraph';
+import { Link } from 'react-router-dom';
 import styles from './CardFilm.module.css';
 import type { CardFilmProps } from './CardFilm.props';
 
-const CardFilm = ({rating, poster, filmName}: CardFilmProps) => {
+const CardFilm = ({id, rating, poster, filmName}: CardFilmProps) => {
+	
 	return ( 
-		<div className={styles['card-film']}>
+		<Link className={styles['card-film']} to={`/movie/${id}`}>
 			<div className={styles['card-film__rating']}>
 				<img src="/star.svg" alt="Star" />
-				<Paragraph>{rating}</Paragraph>
+				{rating}
 			</div>
 			<img className={styles['card-film__poster']} src={`/${poster}`} alt={poster} />
 			<p className={styles['card-film__title']}>{filmName}</p>
@@ -15,7 +16,7 @@ const CardFilm = ({rating, poster, filmName}: CardFilmProps) => {
 				<img src="/like.svg" alt="Like" />
 				<p>В избранное</p>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

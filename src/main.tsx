@@ -1,15 +1,45 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import App from './App.tsx';
 import { GlobalContextProvider } from './context/global.context.tsx';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Home } from './layouts/Home/Home.tsx';
+import { Login } from './pages/Login/Login.tsx';
+import { Favorites } from './pages/Favorites/Favorites.tsx';
+import { Movie } from './pages/Movie/Movie.tsx';
+import { SearchFilms } from './pages/SearchFilms/SearchFilms.tsx';
 
 const rootElement = document.getElementById('root') as HTMLElement;
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Home />,
+		children: [
+			{
+				path: '/',
+				element: <SearchFilms/>,
+			},
+			{
+				path: '/login',
+				element: <Login/>,
+			},
+			{
+				path: '/movie/:id',
+				element: <Movie/>,
+			},
+			{
+				path: '/favorites',
+				element: <Favorites/>,
+			}
+		]
+	},
+]);
 
 createRoot(rootElement).render(
 	<StrictMode>
 		<GlobalContextProvider>
-			<App />
+			<RouterProvider router={router} />
 		</GlobalContextProvider>
 	</StrictMode>
 );
