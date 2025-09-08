@@ -1,0 +1,23 @@
+.app {
+  max-width: 1440px;
+  padding: 0 120px;
+  box-sizing: border-box;
+}
+
+.film-list {
+    box-sizing: border-box;
+    display: flex;
+    gap: 16px 24px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+
+  > button {
+    max-width: 201px;
+  }
+}

@@ -3,15 +3,22 @@
     padding: 8px 8px 16px 8px;
     position: relative;
     width: calc(100% / 4 - 24px);
+    max-width: 282px;
+    min-width: 203px;
     display: flex;
     gap: 16px;
     flex-direction: column;
     border-radius: 12px;
     box-sizing: border-box ;
+
+    > p {
+        color: var(--text-color-primary);
+        padding-left: 8px;
+    }
 }
 
 .card-film__rating {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-around;
     gap: 4px;
@@ -24,25 +31,20 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     font-weight: 400;
-    width: 65px;
-    height: 32px;
-    
-    > p {
-        color: #FFAD49;
-        font-weight: 400;
-        margin: 0;
-    }
+    max-width: 65px;
+    color: #FFAD49;
 }
 
 .card-film__poster {
-    max-width: 282px;
+    width: 100%;
+    max-width: 266px;
     max-height: 400px;
     border-radius: 8px;
-    /* background-image: url('../../../public/shang-chi.png'); */
 }
 
 .card-film__footer {
     display: flex;
     gap: 8px;
     color: #7B6EF6;
+    padding-left: 8px;
 }
