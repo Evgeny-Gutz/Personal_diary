@@ -12,6 +12,15 @@
     margin-top: 8px;
 }
 
+.search-error {
+    margin-top: 104px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
+
 .movies-list {
     box-sizing: border-box;
     margin-top: 80px;

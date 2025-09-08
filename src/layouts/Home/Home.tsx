@@ -13,6 +13,7 @@ interface User {
 export const Home = () => {
         const {dataUser, setContextDataUser} = useContext(GlobalContext);
         const [users, setUsers] = useLocalStorage('Users');
+        
     
         useEffect(() => { // проверяем есть ли в localStorage залогиненный пользователь
             if(!Array.isArray(users) || users.length === 0) return;

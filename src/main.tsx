@@ -8,6 +8,7 @@ import { Login } from './pages/Login/Login.tsx';
 import { Favorites } from './pages/Favorites/Favorites.tsx';
 import { Movie } from './pages/Movie/Movie.tsx';
 import { SearchFilms } from './pages/SearchFilms/SearchFilms.tsx';
+import axios from 'axios';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
 			{
 				path: '/movie/:id',
 				element: <Movie/>,
+				loader: async ({params}) => {
+					const data = await axios.get(`https://search.imdbot.workers.dev/?tt=${params.id}`);
+					return data;
+				},
 			},
 			{
 				path: '/favorites',
