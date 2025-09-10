@@ -21,15 +21,21 @@ interface MovieType {
   photo_height: number;
 }
 
+type SearchType = {
+	search: {
+		value: string;
+	};
+}
+
 export const SearchFilms = () => {
 	const [movies, setMovies] = useState<MovieType[]>([]);
 	const [searchLine, setSearchLine] = useState('new');
 	const [errorLoading, setErrorLoading] = useState<boolean>(false);
 
-	const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+	const handleSearch = (event: FormEvent) => {
 		event.preventDefault();
-		const formData = new FormData(event.currentTarget);
-		const searchValue = formData.get('search') as string;
+		const target = event.target as typeof event.target & SearchType;
+		const searchValue = target.search.value;
 		console.log(searchValue);
 		setSearchLine(searchValue)
 
@@ -49,9 +55,6 @@ export const SearchFilms = () => {
 	useEffect(() => {
 		getMovies(searchLine);
 	}, [searchLine]);
-	
-
-	console.log(errorLoading);
 
     return (
         <>
