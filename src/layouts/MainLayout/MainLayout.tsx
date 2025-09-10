@@ -1,9 +1,9 @@
 import { useContext, useEffect} from "react";
-import NavBar from "../Header/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 import { GlobalContext } from "../../context/global.context";
 import { useLocalStorage } from "../../hooks/use-localstorage.hook";
-import styles from './Home.module.css';
-import { Outlet } from "react-router";
+import styles from './MainLayout.module.css';
+import { Outlet, useNavigate } from "react-router";
 
 interface User {
 	name:string; 
@@ -13,6 +13,8 @@ interface User {
 export const Home = () => {
         const {dataUser, setContextDataUser} = useContext(GlobalContext);
         const [users, setUsers] = useLocalStorage('Users');
+        const navigate = useNavigate();
+        
     
         useEffect(() => { // проверяем есть ли в localStorage залогиненный пользователь
             if(!Array.isArray(users) || users.length === 0) return;
@@ -34,7 +36,7 @@ export const Home = () => {
         };
     
         const handleIn = () => {
-            console.log('Вход');
+            navigate('/login');
         };
 
     return(
